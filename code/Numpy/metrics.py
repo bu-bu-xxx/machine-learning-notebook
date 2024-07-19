@@ -4,7 +4,7 @@ import pandas as pd
 class Metrics:
     @staticmethod
     def confusion_matrix(y_true, y_pred)->pd.DataFrame:
-        classes = y_true.unique().sort()
+        classes = np.sort(np.unique(y_true))
         confusion_mat = np.zeros((classes.shape[0], classes.shape[0]))
         for i in range(classes.shape[0]):
             for j in range(classes.shape[0]):
@@ -52,7 +52,7 @@ class Metrics:
     @staticmethod
     def precision(y_true, y_pred, type='binary'):
         if type == 'binary':
-            if y_pred.unique.shape[0] > 2:
+            if np.unique(y_pred).shape[0] > 2:
                 raise ValueError("y_pred should only have 2 unique values for binary classes")
             confusion_mat = Metrics.confusion_matrix(y_true, y_pred).values
             return confusion_mat[1, 1]/(confusion_mat[1, 1] + confusion_mat[0, 1])
@@ -66,7 +66,7 @@ class Metrics:
     @staticmethod
     def recall(y_true, y_pred, type='binary'):
         if type == 'binary':
-            if y_pred.unique.shape[0] > 2:
+            if np.unique(y_pred).shape[0] > 2:
                 raise ValueError("y_pred should only have 2 unique values for binary classes")
             confusion_mat = Metrics.confusion_matrix(y_true, y_pred).values
             return confusion_mat[1, 1]/(confusion_mat[1, 1] + confusion_mat[1, 0])
@@ -80,7 +80,7 @@ class Metrics:
     @staticmethod
     def f1(y_true, y_pred, type='binary'):
         if type == 'binary':
-            if y_pred.unique.shape[0] > 2:
+            if np.unique(y_pred).shape[0] > 2:
                 raise ValueError("y_pred should only have 2 unique values for binary classes")
             confusion_mat = Metrics.confusion_matrix(y_true, y_pred).values
             return 2 * confusion_mat[1, 1]/(2 * confusion_mat[1, 1] + confusion_mat[1, 0] + confusion_mat[0, 1])
