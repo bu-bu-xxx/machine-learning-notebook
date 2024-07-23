@@ -1,0 +1,85 @@
+// Tree
+digraph {
+	0 [label="petal_length <= 1.9
+gini: 0.6648611111111111
+samples: 120
+values: class
+Iris-setosa        44
+Iris-versicolor    39
+Iris-virginica     37
+Name: count, dtype: int64
+class: Iris-setosa
+" shape=box style="filled, rounded"]
+	1 [label="gini: 0.0
+samples: 44
+values: class
+Iris-setosa    44
+Name: count, dtype: int64
+class: Iris-setosa
+" shape=box style="filled, rounded"]
+	2 [label="petal_length <= 4.8
+gini: 0.4996537396121883
+samples: 76
+values: class
+Iris-versicolor    39
+Iris-virginica     37
+Name: count, dtype: int64
+class: Iris-versicolor
+" shape=box style="filled, rounded"]
+	5 [label="petal_width <= 1.6
+gini: 0.0525931336742147
+samples: 37
+values: class
+Iris-versicolor    36
+Iris-virginica      1
+Name: count, dtype: int64
+class: Iris-versicolor
+" shape=box style="filled, rounded"]
+	11 [label="gini: 0.0
+samples: 35
+values: class
+Iris-versicolor    35
+Name: count, dtype: int64
+class: Iris-versicolor
+" shape=box style="filled, rounded"]
+	12 [label="gini: 0.5
+samples: 2
+values: class
+Iris-versicolor    1
+Iris-virginica     1
+Name: count, dtype: int64
+class: Iris-virginica
+" shape=box style="filled, rounded"]
+	5 -> 11 [label=True]
+	5 -> 12 [label=False]
+	6 [label="petal_length <= 5.0
+gini: 0.14201183431952646
+samples: 39
+values: class
+Iris-versicolor     3
+Iris-virginica     36
+Name: count, dtype: int64
+class: Iris-virginica
+" shape=box style="filled, rounded"]
+	13 [label="gini: 0.48979591836734704
+samples: 7
+values: class
+Iris-versicolor    3
+Iris-virginica     4
+Name: count, dtype: int64
+class: Iris-virginica
+" shape=box style="filled, rounded"]
+	14 [label="gini: 0.0
+samples: 32
+values: class
+Iris-virginica    32
+Name: count, dtype: int64
+class: Iris-virginica
+" shape=box style="filled, rounded"]
+	6 -> 13 [label=True]
+	6 -> 14 [label=False]
+	2 -> 5 [label=True]
+	2 -> 6 [label=False]
+	0 -> 1 [label=True]
+	0 -> 2 [label=False]
+}
