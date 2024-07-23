@@ -5,13 +5,15 @@ class Metrics:
     @staticmethod
     def confusion_matrix(y_true, y_pred)->pd.DataFrame:
         classes = np.sort(np.unique(y_true))
-        confusion_mat = np.zeros((classes.shape[0], classes.shape[0]))
-        for i in range(classes.shape[0]):
-            for j in range(classes.shape[0]):
-                val = np.sum(((y_true == classes[i]) == (y_pred == classes[j])).astype(int))
-                confusion_mat[i, j] = val
-        confusion_mat = pd.DataFrame(confusion_mat, index=classes.astype(str), 
-                                    columns=classes.astype(str))
+        classes = classes.reshape(-1, 1) # unique classes x 1
+        y_true = np.array(y_true) 
+        y_pred = np.array(y_pred)
+        y_true = y_true.reshape(1, -1) # 1 x m
+        y_pred = y_pred.reshape(1, -1) # 1 x m
+
+        confusion_mat = (y_true == classes).astype(int) \
+            .dot((y_pred == classes).astype(int).T) # unique classes x unique classes
+        confusion_mat = pd.DataFrame(confusion_mat, columns=classes.flatten(), index=classes.flatten())
         return confusion_mat
     
     @staticmethod
