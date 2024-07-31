@@ -93,18 +93,11 @@ class SVC:
             raise TypeError("X must be pandas.DataFrame")
         X_test = X.copy()
         X_test = X_test.to_numpy() 
-        # # X_test = X_train
-        # ww = (self.alpha*self.y_train).reshape(-1, 1)*self.X_train
-        # # wwxx = np.sum(self.kernel_func(X_train, X_test), axis=0)
-        # wwxx = np.sum(self.kernel_func(self.X_train, X_test), axis=0)
-        # print(f"ww: {wwxx}")
-        # print("-------------------")
-        # print(self.alpha.reshape(-1, 1)*self.y_train.reshape(-1, 1))
         y_pred =  np.sum(self.alpha.reshape(-1, 1)*self.y_train.reshape(-1, 1) \
                       * self.kernel_func(self.X_train, X_test), axis=0) + self.b
+        y_pred = np.select([y_pred>=0, y_pred<0], 
+                           [self.label[0], self.label[1]], y_pred)
         y_pred = pd.Series(y_pred, index=X.index, name=self.target_name)
-        y_pred[y_pred >= 0] = self.label[0]
-        y_pred[y_pred < 0] = self.label[1]
         return y_pred
 
     def b_func(self) -> float:
@@ -206,8 +199,8 @@ class SVC:
         self.label = np.unique(self.y_train)
         if self.label.shape[0] != 2:
             raise ValueError("only binary classification is supported, please check y")
-        self.y_train[self.y_train == self.label[0]] = 1
-        self.y_train[self.y_train == self.label[1]] = -1
+        self.y_train = np.select([self.y_train == self.label[0], self.y_train == self.label[1]],
+                                 [1, -1], self.y_train)
         self.target_name = y_train.name
         self.columns = X_train.columns
 
